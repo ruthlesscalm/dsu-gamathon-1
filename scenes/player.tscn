@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dsxp68xatccbg"]
+[gd_scene load_steps=12 format=3 uid="uid://dsxp68xatccbg"]
 
 [ext_resource type="Texture2D" uid="uid://b8anvg6vkhhp4" path="res://Assets/Player/player.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://cjlg5a8ppd0cc" path="res://scripts/player.gd" id="1_g2els"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s551d"]
 radius = 6.0827627
@@ -128,6 +129,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_g2els")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 18)
