@@ -144,3 +144,5 @@ vframes = 10
 libraries = {
 &"": SubResource("AnimationLibrary_hkoe6")
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]

@@ -8,7 +8,7 @@ var LastDirectionString: String = "down"
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	Direction.x = sign(Input.get_axis("Left","Right"))
 	Direction.y = sign(Input.get_axis("up","down"))
 	
@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 		DirectionString()
 		IdleAnimation()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Direction.length() > 1:
 		Direction = Direction.normalized()
 	velocity = Direction * SPEED
