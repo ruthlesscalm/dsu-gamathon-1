@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://durrse6ldwv3d"]
+[gd_scene load_steps=10 format=4 uid="uid://durrse6ldwv3d"]
 
 [ext_resource type="PackedScene" uid="uid://dsxp68xatccbg" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://2vmbrn84rbcx" path="res://Assets/tilesets/TX Tileset Grass.png" id="2_0wfyh"]
@@ -236,6 +236,9 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_jyhfs")
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_sugp2"]
+distance = -56.0
+
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
@@ -248,3 +251,24 @@ tile_set = SubResource("TileSet_jyhfs")
 
 [node name="Obstacle" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_tbgi4")
+
+[node name="WorldBorder" type="Area2D" parent="."]
+
+[node name="TopBorder" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(284, -1127)
+rotation = -3.1415925
+shape = SubResource("WorldBoundaryShape2D_sugp2")
+
+[node name="RightBorder" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(1063, 284)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_sugp2")
+
+[node name="BottomBorder" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(278, 361)
+shape = SubResource("WorldBoundaryShape2D_sugp2")
+
+[node name="LeftBorder" type="CollisionShape2D" parent="WorldBorder"]
+position = Vector2(-425, 278)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_sugp2")
