@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dsxp68xatccbg"]
+[gd_scene load_steps=16 format=3 uid="uid://dsxp68xatccbg"]
 
 [ext_resource type="Texture2D" uid="uid://b8anvg6vkhhp4" path="res://Assets/Player/player.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://cjlg5a8ppd0cc" path="res://scripts/player.gd" id="1_g2els"]
@@ -117,9 +117,77 @@ tracks/0/keys = {
 "values": [30, 31, 32, 33, 34, 35]
 }
 
+[sub_resource type="Animation" id="Animation_g2els"]
+resource_name = "attack_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16653334, 0.3333333, 0.49973333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39]
+}
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+resource_name = "attack_side"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16653334, 0.3333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [42, 43, 44, 45]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "attack_up"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16653334, 0.3333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [48, 49, 50, 51]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "death"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [54, 55, 56]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hkoe6"]
 _data = {
 &"RESET": SubResource("Animation_l6tho"),
+&"attack_down": SubResource("Animation_g2els"),
+&"attack_side": SubResource("Animation_qhqgy"),
+&"attack_up": SubResource("Animation_dqkch"),
+&"death": SubResource("Animation_qlg0r"),
 &"idle_down": SubResource("Animation_povjg"),
 &"idle_side": SubResource("Animation_v7tvf"),
 &"idle_up": SubResource("Animation_0mr0g"),
@@ -146,3 +214,8 @@ libraries = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -480
+limit_top = -1184
+limit_right = 1088
+limit_bottom = 384
+position_smoothing_enabled = true
