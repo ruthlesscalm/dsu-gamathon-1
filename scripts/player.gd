@@ -1,5 +1,9 @@
 class_name Player extends CharacterBody2D
 
+@export var max_health := 100
+var health := 100
+
+
 const SPEED: float = 100.0
 var Direction: Vector2 = Vector2.ZERO
 var LastDirection: Vector2 = Vector2.DOWN

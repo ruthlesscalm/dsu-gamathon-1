@@ -20,6 +20,23 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_j0cyh"]
+resource_name = "death"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [84, 85, 86, 87, 88]
+}
+
 [sub_resource type="Animation" id="Animation_4ra3w"]
 resource_name = "idle_down"
 length = 0.75
@@ -119,54 +136,6 @@ tracks/0/keys = {
 "values": [35, 36, 37, 38, 39, 40]
 }
 
-[sub_resource type="Animation" id="Animation_md484"]
-resource_name = "walk_down"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1666, 0.3332, 0.4998, 0.6664, 0.8333, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [42, 43, 44, 45, 46, 47, 48]
-}
-
-[sub_resource type="Animation" id="Animation_ipns3"]
-resource_name = "walk_side"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1666, 0.3332, 0.4998, 0.6664, 0.8333, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [49, 50, 51, 52, 53, 54, 55]
-}
-
-[sub_resource type="Animation" id="Animation_8qclf"]
-resource_name = "walk_up"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1666, 0.3332, 0.5, 0.6664, 0.8333, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [56, 57, 58, 59, 60, 61, 62]
-}
-
 [sub_resource type="Animation" id="Animation_w8i8w"]
 resource_name = "scared_down"
 length = 0.5
@@ -218,9 +187,8 @@ tracks/0/keys = {
 "values": [77, 78, 79]
 }
 
-[sub_resource type="Animation" id="Animation_j0cyh"]
-resource_name = "death"
-length = 1.2
+[sub_resource type="Animation" id="Animation_md484"]
+resource_name = "walk_down"
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -229,10 +197,42 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 0.9, 1.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1666, 0.3332, 0.4998, 0.6664, 0.8333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [84, 85, 86, 87, 88]
+"values": [42, 43, 44, 45, 46, 47, 48]
+}
+
+[sub_resource type="Animation" id="Animation_ipns3"]
+resource_name = "walk_side"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1666, 0.3332, 0.4998, 0.6664, 0.8333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [49, 50, 51, 52, 53, 54, 55]
+}
+
+[sub_resource type="Animation" id="Animation_8qclf"]
+resource_name = "walk_up"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1666, 0.3332, 0.5, 0.6664, 0.8333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [56, 57, 58, 59, 60, 61, 62]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5uy6h"]
@@ -255,14 +255,14 @@ _data = {
 
 [node name="Enemy" type="RigidBody2D"]
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_md0e3")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7p1mj")
 hframes = 7
 vframes = 13
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
-shape = SubResource("CircleShape2D_md0e3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite2D")
