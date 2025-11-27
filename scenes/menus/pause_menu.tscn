@@ -1,11 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://bk0nfo5btjpxm"]
+[gd_scene load_steps=11 format=3 uid="uid://bk0nfo5btjpxm"]
 
 [ext_resource type="Script" uid="uid://dgqik3dt51lmi" path="res://scenes/menus/pause_menu.gd" id="1_7unhi"]
 [ext_resource type="Shader" uid="uid://dvhx2qh1wty4o" path="res://scenes/menus/pause_menu.gdshader" id="1_fwndu"]
+[ext_resource type="Texture2D" uid="uid://be2w8m4xjabt5" path="res://Assets/menus/ChatGPT Image Nov 26, 2025, 10_26_13 PM.png" id="3_gsnt3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7unhi"]
 shader = ExtResource("1_fwndu")
 shader_parameter/lod = 0.8470000402325
+
+[sub_resource type="FontFile" id="FontFile_gsnt3"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h4rbd"]
 border_width_left = 2
@@ -124,6 +132,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_gsnt3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_h4rbd")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s3l4v")
 text = "Resume"
@@ -133,6 +142,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_gsnt3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_h4rbd")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s3l4v")
 text = "Restart"
@@ -142,6 +152,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_gsnt3")
 theme_override_styles/normal = SubResource("StyleBoxFlat_h4rbd")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s3l4v")
 text = "Quit Game"
@@ -150,6 +161,20 @@ text = "Quit Game"
 libraries = {
 &"": SubResource("AnimationLibrary_2wrho")
 }
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 113.0
+offset_top = -26.0
+offset_right = -108.0
+offset_bottom = -127.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_gsnt3")
+expand_mode = 1
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/resume" to="." method="_on_button_pressed"]
