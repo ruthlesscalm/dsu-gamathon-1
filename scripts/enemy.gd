@@ -4,7 +4,7 @@ class_name Enemy extends CharacterBody2D
 @export var chase_speed := 50.0
 @export var health := 60
 @export var damage := 10
-@export var detection_radius := 160.0
+@export var detection_radius := 100.0
 @export var attack_range := 24.0
 @export var patrol_distance := 96.0
 @export var attack_cooldown := 1.5
