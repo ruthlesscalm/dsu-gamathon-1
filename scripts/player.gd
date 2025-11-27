@@ -153,7 +153,7 @@ func take_damage(amount:int):
 
 func die():
 	queue_free()
-	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+	get_tree().change_scene_to_file("res://scenes/menus/death_menu.tscn")
 
 
 
