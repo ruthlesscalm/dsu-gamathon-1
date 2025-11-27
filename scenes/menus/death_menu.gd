@@ -3,6 +3,8 @@ class_name DeathScreen extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# Keep it hidden until player dies
+	visible = false
 	pass
 
 

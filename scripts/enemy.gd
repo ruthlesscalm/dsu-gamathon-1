@@ -123,10 +123,13 @@ func _patrol():
 func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
+		# Immediately set state to dead to stop attacking
+		state = "dead"
 		_die()
 
 func _die():
-	state = "dead"
+	# Stop all movement
+	velocity = Vector2.ZERO
 	
 	# Award points to player
 	GameManager.add_points(GameManager.enemy_points)

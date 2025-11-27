@@ -2,6 +2,7 @@ class_name Player extends CharacterBody2D
 
 @export var max_health := 100
 var health := 100
+var invulnerable := false  # Invulnerability frames to prevent rapid damage
 
 
 const SPEED: float = 100.0
@@ -13,6 +14,7 @@ var stunned := false
 @export var attack_damage := 20
 @export var attack_range := 36.0
 @export var attack_knockback := 32.0
+@export var invulnerability_duration := 0.8  # Seconds of invulnerability after taking damage
 
 var map_width  = 49
 var map_height = 49
@@ -143,27 +145,50 @@ func Attack():
 	attacking = false
 	
 func take_damage(amount:int):
+	# Don't take damage if invulnerable
+	if invulnerable:
+		return
+	
 	health -= amount
 	_play_damage_feedback()
+	
+	# Check for death immediately
 	if health <= 0:
 		die()
+		return
+	
+	# Start invulnerability period (only if still alive)
+	invulnerable = true
+	_stun_timer.wait_time = invulnerability_duration
+	_stun_timer.start()
+	await _stun_timer.timeout
+	invulnerable = false
 
 func heal_to_full():
 	health = max_health
 	print("Health restored to ", max_health)
 
 func die():
-	# remove player from scene
-	queue_free()
-	# try to show in-scene death menu if present (main scene instances it)
-	var root = get_tree().get_root()
-	if root.get_child_count() > 0:
-		var scene_root = root.get_child(0)
-		var death_node = scene_root.get_node_or_null("CanvasLayer/Control")
+	print("Player died! Health: ", health)
+	
+	# Get the main scene (usually "Main" node)
+	var main_scene = get_tree().current_scene
+	if main_scene:
+		print("Main scene found: ", main_scene.name)
+		var death_node = main_scene.get_node_or_null("CanvasLayer/Control")
 		if death_node:
+			print("Death menu found, showing it...")
 			death_node.visible = true
+			# Remove player from scene AFTER showing menu
+			queue_free()
 			return
-	# fallback: change to the standalone death scene
+		else:
+			print("Death menu not found at CanvasLayer/Control in main scene")
+	else:
+		print("Main scene not found")
+	
+	print("Using fallback death scene")
+	# Fallback: change to the standalone death scene
 	get_tree().change_scene_to_file("res://scenes/menus/death_menu.tscn")
 
 

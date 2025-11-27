@@ -16,6 +16,7 @@ cache/0/16/0/scale = 1.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dyp04"]
 
 [node name="Control" type="Control"]
+visible = false
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -24,7 +25,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_s3l4v")
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
