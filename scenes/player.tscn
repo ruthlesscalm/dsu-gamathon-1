@@ -197,6 +197,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 5
 script = ExtResource("1_g2els")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
