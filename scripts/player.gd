@@ -139,9 +139,6 @@ func Attack():
 		if d <= attack_range:
 			if e.has_method("take_damage"):
 				e.take_damage(attack_damage)
-			if e.has_method("apply_knockback"):
-				var knockback_vector = (e.global_position - global_position).normalized() * attack_knockback
-				e.apply_knockback(knockback_vector)
 
 	attacking = false
 	

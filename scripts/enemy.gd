@@ -1,18 +1,14 @@
 class_name Enemy extends CharacterBody2D
 
-@export var speed := 40
-@export var health := 30
+@export var patrol_speed := 30.0
+@export var chase_speed := 50.0
+@export var health := 60
 @export var damage := 10
 @export var detection_radius := 160.0
-@export var attack_range := 16.0
+@export var attack_range := 24.0
 @export var patrol_distance := 96.0
-@export var attack_cooldown := 1.0
-@export var knockback_strength := 180.0
-@export var keep_distance := 64.0
-@export var retreat_distance := 64.0
-
-@export var lunge_speed := 120.0
-@export var lunge_distance := 32.0
+@export var attack_cooldown := 1.5
+@export var keep_distance := 8.0  # 0.5 tiles (1 tile = 16 pixels)
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -20,134 +16,113 @@ class_name Enemy extends CharacterBody2D
 var start_pos: Vector2
 var patrol_dir := 1
 var attack_timer := 0.0
-var stunned := false
-var _stun_timer: Timer
-var is_lunging := false
-var lunge_target := Vector2.ZERO
-var retreating := false
-var retreat_target := Vector2.ZERO
+
+# Simple state machine
+var state := "patrol"  # patrol, chase, attack, dead
 
 func _ready():
 	start_pos = global_position
 	add_to_group("enemy")
-	_stun_timer = Timer.new()
-	_stun_timer.one_shot = true
-	add_child(_stun_timer)
 
 func _physics_process(delta):
 	attack_timer = max(0.0, attack_timer - delta)
-	if stunned:
-		move_and_slide()
+	
+	if state == "dead":
 		return
-	if is_lunging:
-		_lunge(delta)
-		return
-	if retreating:
-		var to_target = retreat_target - global_position
-		if to_target.length() < 4:
-			retreating = false
-			attack_timer = attack_cooldown
-			return
-		var back_dir = to_target.normalized()
-		velocity = back_dir * speed
-		animation_player.play("walk_side")
-		sprite.scale.x = -1 if back_dir.x < 0 else 1
-		move_and_slide()
-		return
+	
+	# Try to find player
 	var players = get_tree().get_nodes_in_group("player")
 	var player = null
 	if players.size() > 0:
 		player = players[0]
-
+	
 	if player:
-		var to_player = player.global_position - global_position
-		var dist = to_player.length()
-		if dist <= detection_radius:
-			_chase_player(player, dist, delta)
+		var dist = (player.global_position - global_position).length()
+		
+		# If in range, attack
+		if dist <= attack_range and attack_timer <= 0.0:
+			state = "attack"
+			_attack_player(player)
 			return
+		
+		# If can see player, chase
+		if dist <= detection_radius:
+			state = "chase"
+			_chase_player(player)
+			return
+	
+	# Otherwise patrol
+	state = "patrol"
+	_patrol()
 
-	_patrol(delta)
-
-func _chase_player(player, dist, _delta):
+func _chase_player(player: CharacterBody2D):
 	var to_player = player.global_position - global_position
-	var dir = to_player.normalized()
-
-	if attack_timer > 0.0:
-		velocity = Vector2.ZERO
-		animation_player.play("idle_down")
-		return
-
+	var dist = to_player.length()
+	var direction = to_player.normalized()
+	
+	# If we're at or beyond keep_distance, maintain that distance (back away slowly)
 	if dist > keep_distance:
-		velocity = dir * speed
-		if abs(dir.x) > abs(dir.y):
-			animation_player.play("walk_side")
-			sprite.scale.x = -1 if dir.x < 0 else 1
-		else:
-			animation_player.play("walk_up" if dir.y < 0 else "walk_down")
-		move_and_slide()
-		return
-
-	if dist <= keep_distance and attack_timer <= 0.0:
-		is_lunging = true
-		lunge_target = global_position + dir * lunge_distance
-		attack_timer = attack_cooldown
-
-func _lunge(delta):
-	var to_target = lunge_target - global_position
-	if to_target.length() < 4:
-		is_lunging = false
-		retreating = true
-		retreat_target = global_position - (lunge_target - global_position).normalized() * lunge_distance
-		var players = get_tree().get_nodes_in_group("player")
-		if players.size() > 0:
-			var player = players[0]
-			if player and player.has_method("take_damage"):
-				var dist = (player.global_position - global_position).length()
-				if dist <= attack_range:
-					player.take_damage(damage)
-		return
-
-	var lunge_dir = to_target.normalized()
-	velocity = lunge_dir * lunge_speed
-	animation_player.play("walk_side")
-	sprite.scale.x = -1 if lunge_dir.x < 0 else 1
-	move_and_slide()
-
-func _patrol(_delta):
-	var target = start_pos + Vector2(patrol_distance * patrol_dir, 0)
-	var dir = target - global_position
-	if dir.length() < 4:
-		patrol_dir *= -1
-		target = start_pos + Vector2(patrol_distance * patrol_dir, 0)
-		dir = target - global_position
-
-	if dir.length() > 1:
-		var move_dir = dir.normalized()
-		velocity = move_dir * (speed * 0.6)
-		if abs(move_dir.x) > abs(move_dir.y):
-			animation_player.play("walk_side")
-			sprite.scale.x = -1 if move_dir.x < 0 else 1
+		# Chase normally towards player
+		velocity = direction * chase_speed
+	else:
+		# Too close: back away slowly to maintain distance
+		velocity = -direction * (chase_speed * 0.3)  # Back away at 30% speed
+	
+	# Simple animation based on direction
+	if abs(direction.x) > abs(direction.y):
+		animation_player.play("walk_side")
+		sprite.scale.x = -1 if direction.x < 0 else 1
+	else:
+		if direction.y < 0:
+			animation_player.play("walk_up")
 		else:
 			animation_player.play("walk_down")
-	else:
-		velocity = Vector2.ZERO
-		animation_player.play("idle_down")
-
+	
 	move_and_slide()
 
-func take_damage(amount):
+func _attack_player(player: CharacterBody2D):
+	velocity = Vector2.ZERO
+	animation_player.play("idle_down")
+	
+	# Deal damage
+	if player.has_method("take_damage"):
+		player.take_damage(damage)
+	
+	attack_timer = attack_cooldown
+
+func _patrol():
+	var target = start_pos + Vector2(patrol_distance * patrol_dir, 0)
+	var direction = (target - global_position).normalized()
+	var dist = (target - global_position).length()
+	
+	# Change direction if reached waypoint
+	if dist < 4:
+		patrol_dir *= -1
+		target = start_pos + Vector2(patrol_distance * patrol_dir, 0)
+		direction = (target - global_position).normalized()
+	
+	velocity = direction * patrol_speed
+	
+	# Simple animation
+	if abs(direction.x) > abs(direction.y):
+		animation_player.play("walk_side")
+		sprite.scale.x = -1 if direction.x < 0 else 1
+	else:
+		animation_player.play("walk_down")
+	
+	move_and_slide()
+
+func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
 		_die()
 
-func apply_knockback(kvec: Vector2, stun: float = 0.12) -> void:
-	velocity = kvec
-	stunned = true
-	_stun_timer.start(stun)
-	await _stun_timer.timeout
-	stunned = false
-
 func _die():
+	state = "dead"
+	animation_player.play("death")
+	# Free after animation finishes
+	await animation_player.animation_finished
+	queue_free()
 	animation_player.play("death")
 	await animation_player.animation_finished
 	queue_free()
