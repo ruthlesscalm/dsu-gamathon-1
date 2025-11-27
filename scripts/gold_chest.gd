@@ -18,7 +18,8 @@ func _on_body_entered(body):
 		if body.has_method("heal_to_full"):
 			body.heal_to_full()
 		
-		# Award points
-		GameManager.add_points(GameManager.chest_points)
+		# Award even more points for gold chest
+		var gold_points = GameManager.chest_points + 35  # 60 points
+		GameManager.add_points(gold_points)
 		
-		print("Chest opened! Full health restored! +", GameManager.chest_points, " points")
+		print("Gold Chest opened! Full health restored! +", gold_points, " points")

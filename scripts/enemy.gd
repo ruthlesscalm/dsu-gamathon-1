@@ -127,10 +127,13 @@ func take_damage(amount: int):
 
 func _die():
 	state = "dead"
-	animation_player.play("death")
-	# Free after animation finishes
-	await animation_player.animation_finished
-	queue_free()
-	animation_player.play("death")
-	await animation_player.animation_finished
+	
+	# Award points to player
+	GameManager.add_points(GameManager.enemy_points)
+	
+	# Play death animation if available
+	if animation_player and animation_player.has_animation("death"):
+		animation_player.play("death")
+		await animation_player.animation_finished
+	
 	queue_free()

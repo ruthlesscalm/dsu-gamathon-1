@@ -67,7 +67,7 @@ func _physics_process(_delta: float) -> void:
 		velocity = Vector2.ZERO
 	else:
 		velocity = Direction * SPEED
-
+	print(health)
 	move_and_slide()
 
 func apply_knockback(kvec: Vector2, stun: float = 0.18) -> void:
@@ -147,6 +147,10 @@ func take_damage(amount:int):
 	_play_damage_feedback()
 	if health <= 0:
 		die()
+
+func heal_to_full():
+	health = max_health
+	print("Health restored to ", max_health)
 
 func die():
 	# remove player from scene
