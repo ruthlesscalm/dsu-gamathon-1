@@ -9,6 +9,9 @@ shader = ExtResource("1_fwndu")
 shader_parameter/lod = 0.8470000402325
 
 [sub_resource type="FontFile" id="FontFile_gsnt3"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
 cache/0/16/0/ascent = 0.0
 cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
@@ -109,6 +112,20 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 113.0
+offset_top = -26.0
+offset_right = -108.0
+offset_bottom = -127.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_gsnt3")
+expand_mode = 1
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 process_mode = 3
 layout_mode = 1
@@ -162,23 +179,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_2wrho")
 }
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 113.0
-offset_top = -26.0
-offset_right = -108.0
-offset_bottom = -127.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_gsnt3")
-expand_mode = 1
-
-[connection signal="pressed" from="PanelContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/resume" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/restart" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/quit" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]
