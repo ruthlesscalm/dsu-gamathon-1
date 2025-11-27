@@ -169,6 +169,7 @@ func take_damage(amount:int):
 
 func heal_to_full():
 	health = max_health
+	emit_signal("health_changed", health)
 	print("Health restored to ", max_health)
 
 func die():
