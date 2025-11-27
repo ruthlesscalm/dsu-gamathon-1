@@ -16,6 +16,7 @@ class_name Enemy extends CharacterBody2D
 var start_pos: Vector2
 var patrol_dir := 1
 var attack_timer := 0.0
+var facing_direction := Vector2.RIGHT  # Track which direction enemy is facing
 
 # Simple state machine
 var state := "patrol"  # patrol, chase, attack, dead
@@ -60,6 +61,9 @@ func _chase_player(player: CharacterBody2D):
 	var dist = to_player.length()
 	var direction = to_player.normalized()
 	
+	# Store facing direction for attack checks
+	facing_direction = direction
+	
 	# If we're at or beyond keep_distance, maintain that distance (back away slowly)
 	if dist > keep_distance:
 		# Chase normally towards player
@@ -84,8 +88,12 @@ func _attack_player(player: CharacterBody2D):
 	velocity = Vector2.ZERO
 	animation_player.play("idle_down")
 	
-	# Deal damage
-	if player.has_method("take_damage"):
+	# Only attack if player is in front of us (within 90 degrees of facing direction)
+	var to_player = (player.global_position - global_position).normalized()
+	var dot_product = to_player.dot(facing_direction)
+	
+	# dot_product > 0 means player is in front (within 90 degrees)
+	if dot_product > 0 and player.has_method("take_damage"):
 		player.take_damage(damage)
 	
 	attack_timer = attack_cooldown

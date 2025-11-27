@@ -149,7 +149,17 @@ func take_damage(amount:int):
 		die()
 
 func die():
+	# remove player from scene
 	queue_free()
+	# try to show in-scene death menu if present (main scene instances it)
+	var root = get_tree().get_root()
+	if root.get_child_count() > 0:
+		var scene_root = root.get_child(0)
+		var death_node = scene_root.get_node_or_null("CanvasLayer/Control")
+		if death_node:
+			death_node.visible = true
+			return
+	# fallback: change to the standalone death scene
 	get_tree().change_scene_to_file("res://scenes/menus/death_menu.tscn")
 
 
