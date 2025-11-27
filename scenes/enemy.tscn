@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://do4beinesuwts"]
+[gd_scene load_steps=19 format=3 uid="uid://do4beinesuwts"]
 
 [ext_resource type="Texture2D" uid="uid://d1ddr6ll6hbnj" path="res://Assets/Enemy/slime.png" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://u51gjpuum28h" path="res://scripts/enemy.gd" id="1_md0e3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 radius = 6.0
@@ -253,7 +254,9 @@ _data = {
 &"walk_up": SubResource("Animation_8qclf")
 }
 
-[node name="Enemy" type="RigidBody2D"]
+[node name="Enemy" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_md0e3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
