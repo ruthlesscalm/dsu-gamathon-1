@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://durrse6ldwv3d"]
+[gd_scene load_steps=24 format=4 uid="uid://durrse6ldwv3d"]
 
 [ext_resource type="PackedScene" uid="uid://dsxp68xatccbg" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://2vmbrn84rbcx" path="res://Assets/tilesets/TX Tileset Grass.png" id="2_0wfyh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ddkhej642ukmr" path="res://Assets/tilesets/TX Props with Shadow.png" id="6_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://chob2vfmnqbfx" path="res://Assets/tilesets/TX Plant with Shadow.png" id="6_tipki"]
 [ext_resource type="Texture2D" uid="uid://bw1ltjm8uuwts" path="res://Assets/tilesets/TX Plant.png" id="7_85g3d"]
+[ext_resource type="PackedScene" uid="uid://bk0nfo5btjpxm" path="res://scenes/menus/pause_menu.tscn" id="8_tipki"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 resource_name = "Grass"
@@ -2164,6 +2165,10 @@ sources/1 = SubResource("TileSetAtlasSource_eb6dy")
 sources/2 = SubResource("TileSetAtlasSource_trceg")
 
 [node name="Main" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_tipki")]
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 position = Vector2(219, 15)

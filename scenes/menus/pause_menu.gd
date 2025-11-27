@@ -1,21 +1,28 @@
 extends Control
+
+func _ready():
+	visible = false  # hide pause menu at start
+
+func _process(delta):
+	if Input.is_action_just_pressed("esc"):
+		if get_tree().paused:
+			resume()
+		else:
+			pause()
+
 func resume():
 	get_tree().paused = false
+	visible = false   # hide pause screen
 
 func pause():
 	get_tree().paused = true
-
-func testEsc():
-	if Input.is_action_just_pressed("esc") and !get_tree().paused:
-		pause()
-	elif Input.is_action_just_pressed("esc") and get_tree().paused:
-		resume()
+	visible = true    # show pause screen
 
 func _on_resume_pressed():
-	pass # Replace with function body.
+	resume()
 
 func _on_restart_pressed():
-	pass # Replace with function body.
+	get_tree().reload_current_scene()
 
 func _on_quit_pressed():
-	pass # Replace with function body.
+	get_tree().quit()
