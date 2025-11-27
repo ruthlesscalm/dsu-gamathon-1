@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4ktcthngik3f"
-path="res://.godot/imported/TX Chest Animation.png-ce1b47c988c837828b55eae24b7c3a38.ctex"
+uid="uid://dy6yiijfi1ptn"
+path="res://.godot/imported/healthbarProgress.png-8160fa4be97eea1d23c4894613663998.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/chest/TX Chest Animation.png"
-dest_files=["res://.godot/imported/TX Chest Animation.png-ce1b47c988c837828b55eae24b7c3a38.ctex"]
+source_file="res://Assets/menus/healthbarProgress.png"
+dest_files=["res://.godot/imported/healthbarProgress.png-8160fa4be97eea1d23c4894613663998.ctex"]
 
 [params]
 

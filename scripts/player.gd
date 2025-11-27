@@ -3,6 +3,8 @@ class_name Player extends CharacterBody2D
 @export var max_health := 100
 var health := 100
 var invulnerable := false  # Invulnerability frames to prevent rapid damage
+signal health_changed(new_health: int)
+
 
 
 const SPEED: float = 100.0
@@ -151,6 +153,7 @@ func take_damage(amount:int):
 	
 	health -= amount
 	_play_damage_feedback()
+	emit_signal("health_changed", health)
 	
 	# Check for death immediately
 	if health <= 0:

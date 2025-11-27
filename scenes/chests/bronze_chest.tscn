@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://d1i0jd0wa81so"]
 
-[ext_resource type="Texture2D" uid="uid://evj8l1snkt6f" path="res://Assets/chest/TX Chest Animation.png" id="1_3irt5"]
+[ext_resource type="Texture2D" uid="uid://evj8l1snkt6f" path="res://Assets/menus/TX Chest Animation.png" id="1_3irt5"]
 [ext_resource type="Script" uid="uid://bxmdvtnqxffda" path="res://scripts/bronze_chest.gd" id="1_65cje"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3irt5"]
